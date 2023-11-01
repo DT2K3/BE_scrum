@@ -1,0 +1,57 @@
+# Ignore node_modules directory
+node_modules/
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Environment
+.env
+
+# Distribution folder
+dist/
+
+# Dependency directories
+jspm_packages/
+typings/
+
+# Older package managers
+node
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editor directories and files
+.idea
+.vscode
+
+# IDE preferences
+*.sublime-*
+*.suo
+*.ntvs*
+
+# Windows Installer files
+*.swp
