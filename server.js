@@ -79,3 +79,92 @@ app.get('/users', (req, res) => {
         return res.status(200).json(results);
     });
 });
+
+// Định nghĩa tuyến dẫn API để lấy tất cả các dự án
+app.get('/cl/projects', (req, res) => {
+    // Sử dụng truy vấn SQL để lấy tất cả các dự án
+    const sql = 'SELECT * FROM Project';
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error querying the database:', err);
+            res.status(500).json({ error: 'Failed to fetch projects.' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+
+app.post('/cl/projects', (req, res) => {
+    const projectData = req.body;
+    const sql = 'INSERT INTO Project (IDProject, Project_Name, Description, Quantity, BeginDate, EndDate, Address, Photo, UserID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+    const values = [
+        projectData.IDProject,
+        projectData.Project_Name,
+        projectData.Description,
+        projectData.Quantity,
+        projectData.BeginDate,
+        projectData.EndDate,
+        projectData.Address,
+        projectData.Photo,
+        projectData.UserID
+    ];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.error('Error inserting project:', err);
+            res.status(500).json({ error: 'Failed to create a new project.' });
+        } else {
+            res.status(201).json({ message: 'Project created successfully.' });
+        }
+    });
+});
+
+app.delete('/cl/projects/:id', (req, res) => {
+    const projectId = req.params.id;
+    const sql = 'DELETE FROM Project WHERE IDProject = ?';
+
+    db.query(sql, [projectId], (err, result) => {
+        if (err) {
+            console.error('Error deleting project:', err);
+            res.status(500).json({ error: 'Failed to delete the project.' });
+        } else {
+            res.json({ message: 'Project deleted successfully.' });
+        }
+    });
+});
+
+app.put('/cl/projects/:id', (req, res) => {
+    const projectId = req.params.id;
+    const projectData = req.body;
+    const sql = 'UPDATE Project SET Project_Name = ?, Description = ?, Quantity = ?, BeginDate = ?, EndDate = ?, Address = ?, Photo = ?, UserID = ? WHERE IDProject = ?';
+
+    const values = [
+        projectData.Project_Name,
+        projectData.Description,
+        projectData.Quantity,
+        projectData.BeginDate,
+        projectData.EndDate,
+        projectData.Address,
+        projectData.Photo,
+        projectData.UserID,
+        projectId
+    ];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.error('Error updating project:', err);
+            res.status(500).json({ error: 'Failed to update the project.' });
+        } else {
+            res.json({ message: 'Project updated successfully.' });
+        }
+    });
+});
+
+
+
+
+
+
